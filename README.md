@@ -3,7 +3,7 @@
 
 This course emphasizes data structures, their design, implementation and performance issues.
 
-**Topics in Order**
+**Topics covered**
 1. Introduction, lists, linked lists, stack, queue, and circular linked list and their implementation: ADT,
 Binary search, Tradeoffs
 2. Recursion and its implementation: Call trees and traces
