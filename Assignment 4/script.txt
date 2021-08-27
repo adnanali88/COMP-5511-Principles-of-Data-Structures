@@ -1,0 +1,55 @@
+// The script file supports line comments. Content after // is ignored
+// Empty lines are also ignored
+// The script file supports two commands: QUERY and PRINT
+// The queries consists of 1 or N clauses and those clauses are connected by AND (a logical operator)
+// Each clause starts with a field name (i.e., id, name, type, region, and location) and followed
+// by ':' and a value.
+// A value of a query accepts different format depending on the field name.
+// - The id field accepts only this format: id: id_value
+// - The name field accepts these format:
+//     - name: string
+//     - name: EXACT_MATCH(string)
+//     - name: MATCH_ALL(string)
+//     - name: MATCH_ANY(string)
+// - The type and region fields accept the same format as the name field
+// - The location field accepts two formats: AT(latitude,longitude) and WITHIN(from_latitude,from_longitude | to_latitude,to_longitude)
+// Below are some examples:
+
+QUERY type: national park
+
+QUERY type: MATCH_ANY(national | park)
+
+
+// Find a place with id EJJER
+QUERY id: EJJER
+
+// Find all places whose name contains all of words of the string "Lac Verte"
+QUERY name: Lac Verte
+QUERY name: MATCH_ALL(Lac verte) // This query is equivalent to QUERY name: Lac Verte
+
+// Find all places whose name exactly match the string "Lac Verte"
+QUERY name: EXACT_MATCH(Lac Verte)
+
+// Find all parishes in Saint-Lambert or Brossard
+QUERY region: MATCH_ANY(Saint-Lambert | Brossard) AND type: Parish
+
+// Find all parks within the given coordinates (small area of Montreal)
+QUERY type: park AND location: WITHIN(45.5008330N,73.5083330W | 45.6008330N,73.6083330W)
+
+
+// Find places at the given coordinate
+QUERY location: AT(46.0486111N,71.9277778W)
+
+// Find all lakes in Baie-d'Hudson region
+QUERY type: lake AND  region: Baie-d'Hudson
+
+// Find all lakes in Baie-d'Hudson region within (55.001N,74.5W | 55.8N,76.10W)
+QUERY type: lake AND  region: Baie-d'Hudson AND location: WITHIN(55.001N,74.5W | 55.8N,76.10W)
+
+// The program also supports printing its in-memory indices including: BST of ids,
+// inverted indices of name, region, and type. Uncomment any command to print.
+
+// PRINT id
+// PRINT name
+// PRINT type
+// PRINT region
